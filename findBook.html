@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <script src="ajax.js"></script>
+    </head>
+    <body>
+        <header class="container">
+            <div class="row">
+                <h1 class="col-sm-8">Jem's Book Finder</h1>
+                <nav id="navigation" class="col-sm-4">
+                    <a href="index.html">Main</a>
+                    <a href="findBook.html">Find books</a>
+                    <a href="about.html">About</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="contact.html">Contact Us</a>
+                    <!--<input type="text" id="book" size="20" />
+                    <a class="btn btn-primary">Find</a>-->
+                </nav>
+            </div>
+        </header>
+        <section id="use" class="container text-center">
+            <h1 class="col-sm-12">Find the Book You Want</h1>
+            <p>Input the Author's Last Name</p>
+            <input type="text" id="find" size="20" />
+            <a id="submit" class="btn btn-primary">Find</a>
+            
+            <!-- Finish this Shit! -->
+            <!--                   -->
+            <!--                   -->
+            <!--                   -->
+            <script>
+            var httpRequest;
+            let result = document.getElementById('use').appendChild(document.createTextNode(" "));
+            document.getElementById("submit").addEventListener('click', makeRequest);
+            
+            function makeRequest() {
+                httpRequest = new XMLHttpRequest();
+
+                if (!httpRequest) {
+                    alert('Giving up :( Cannot create an XMLHTTP instance');
+                    return false;
+                }
+                
+                httpRequest.onreadystatechange = getBook;
+                httpRequest.open('GET', 'findBook.html');
+                httpRequest.send();
+                
+            }
+                
+            function getBook() {
+                    /* global ajax */
+                    /* global parseResponse */
+                    result.nodeValue = "";
+                    var url = "https://www.googleapis.com/books/v1/volumes?q=inauthor:";
+                    var search = document.getElementById('find').value;
+                    var apiKey = "AIzaSyBpyJuXb2HYdz6RB2NwYEfFVKg-TncvtY0"; // Replace "APIKEY" with your own API key; otherwise, your HTTP request will not work 
+                    url += search + "&key=" + apiKey; 
+                    ajax(url, function(resp) {        
+                    //resp = parseResponse(resp);
+                    result.nodeValue = resp;
+                    });
+            }
+        </script>
+        </section>
+    </body>
+</html>
+
+<!-- AIzaSyBpyJuXb2HYdz6RB2NwYEfFVKg-TncvtY0 -->
